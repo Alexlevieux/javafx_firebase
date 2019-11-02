@@ -10,13 +10,14 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class Main extends Application {
-Stage loginStage;
-    @Override
-    public void start(Stage primaryStage) throws Exception{
-      this.loginStage = primaryStage;
+  Stage loginStage;
 
-      openLoginWindow();
-    }
+  @Override
+  public void start(Stage primaryStage) throws Exception {
+    this.loginStage = primaryStage;
+    primaryStage.setResizable(false);
+    openLoginWindow();
+  }
 
   private void openLoginWindow() {
     try {
@@ -33,6 +34,6 @@ Stage loginStage;
 
 
   public static void main(String[] args) {
-        launch(args);
-    }
+    launch(args);
+  }
 }
