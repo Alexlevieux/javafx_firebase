@@ -4,7 +4,6 @@
 <?import com.jfoenix.controls.JFXPasswordField?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -51,45 +50,49 @@
             <Font name="Arial" size="37.0" />
          </font>
       </Label>
-      <AnchorPane fx:id="signUpPane" layoutX="802.0" layoutY="62.0" prefHeight="524.0" prefWidth="299.0" style="-fx-background-color: #fff; -fx-background-radius: 50px;">
+      <AnchorPane fx:id="signUpPane" layoutX="802.0" layoutY="62.0" prefHeight="524.0" prefWidth="299.0" style="-fx-background-color: #fff; -fx-background-radius: 50px;" stylesheets="@../stylesheets/styles.css">
          <effect>
             <DropShadow />
          </effect>
          <children>
             <Label alignment="CENTER" layoutX="68.0" layoutY="28.0" prefHeight="42.0" prefWidth="164.0" text="Create New Account" textAlignment="CENTER" wrapText="true" />
-            <JFXTextField focusColor="#405aa800" labelFloat="true" layoutX="38.0" layoutY="311.0" prefHeight="35.0" prefWidth="223.0" promptText="Phone Number" style="-fx-border-color: #e2e2e2; -fx-border-radius: 50px;" unFocusColor="#4d4d4d00">
+            <JFXTextField fx:id="phoneNumberTxt" focusColor="#405aa800" labelFloat="true" layoutX="39.0" layoutY="298.0" prefHeight="35.0" prefWidth="223.0" promptText="Phone Number" style="-fx-border-color: #e2e2e2; -fx-border-radius: 50px;" unFocusColor="#4d4d4d00">
                <padding>
                   <Insets left="5.0" top="5.0" />
                </padding>
             </JFXTextField>
-            <JFXPasswordField focusColor="#405aa800" labelFloat="true" layoutX="39.0" layoutY="162.0" prefHeight="35.0" prefWidth="223.0" promptText="Password" style="-fx-border-color: #e2e2e2; -fx-border-radius: 50px;" unFocusColor="#4d4d4d00">
+            <JFXPasswordField fx:id="passwordTxt" focusColor="#405aa800" labelFloat="true" layoutX="39.0" layoutY="162.0" prefHeight="35.0" prefWidth="223.0" promptText="Password" style="-fx-border-color: #e2e2e2; -fx-border-radius: 50px;" unFocusColor="#4d4d4d00">
                <padding>
                   <Insets left="5.0" top="5.0" />
                </padding>
             </JFXPasswordField>
-            <JFXButton alignment="CENTER" buttonType="RAISED" layoutX="39.0" layoutY="405.0" prefHeight="42.0" prefWidth="223.0" style="-fx-background-color: #008a68; -fx-background-radius: 50px;" text="Register" textFill="#f5f5f5" />
-            <JFXTextField focusColor="#405aa800" labelFloat="true" layoutX="39.0" layoutY="70.0" prefHeight="35.0" prefWidth="223.0" promptText="Full Name" style="-fx-border-color: #e2e2e2; -fx-border-radius: 50px;" unFocusColor="#4d4d4d00">
+            <JFXButton alignment="CENTER" buttonType="RAISED" layoutX="39.0" layoutY="405.0" onAction="#registerAction" prefHeight="42.0" prefWidth="223.0" style="-fx-background-color: #008a68; -fx-background-radius: 50px;" text="Register" textFill="#f5f5f5" />
+            <JFXTextField fx:id="nameTxt" focusColor="#405aa800" labelFloat="true" layoutX="39.0" layoutY="70.0" prefHeight="35.0" prefWidth="223.0" promptText="Full Name" style="-fx-border-color: #e2e2e2; -fx-border-radius: 50px;" unFocusColor="#4d4d4d00">
                <padding>
                   <Insets left="5.0" top="5.0" />
                </padding>
             </JFXTextField>
-            <JFXTextField focusColor="#405aa800" labelFloat="true" layoutX="39.0" layoutY="118.0" prefHeight="35.0" prefWidth="223.0" promptText="Username" style="-fx-border-color: #e2e2e2; -fx-border-radius: 50px;" unFocusColor="#4d4d4d00">
+            <JFXTextField fx:id="usernameTxt" focusColor="#405aa800" labelFloat="true" layoutX="39.0" layoutY="118.0" prefHeight="35.0" prefWidth="223.0" promptText="Username" style="-fx-border-color: #e2e2e2; -fx-border-radius: 50px;" unFocusColor="#4d4d4d00">
                <padding>
                   <Insets left="5.0" top="5.0" />
                </padding>
             </JFXTextField>
-            <JFXTextField focusColor="#405aa800" labelFloat="true" layoutX="39.0" layoutY="254.0" prefHeight="35.0" prefWidth="223.0" promptText="Address" style="-fx-border-color: #e2e2e2; -fx-border-radius: 50px;" unFocusColor="#4d4d4d00">
+            <JFXTextField fx:id="addressTxt" focusColor="#405aa800" labelFloat="true" layoutX="39.0" layoutY="254.0" prefHeight="35.0" prefWidth="223.0" promptText="Address" style="-fx-border-color: #e2e2e2; -fx-border-radius: 50px;" unFocusColor="#4d4d4d00">
                <padding>
                   <Insets left="5.0" top="5.0" />
                </padding>
             </JFXTextField>
-            <JFXPasswordField focusColor="#405aa800" labelFloat="true" layoutX="39.0" layoutY="209.0" prefHeight="35.0" prefWidth="223.0" promptText="Confirm Password" style="-fx-border-color: #e2e2e2; -fx-border-radius: 50px;" unFocusColor="#4d4d4d00">
+            <JFXPasswordField fx:id="confirmPasswordTxt" focusColor="#405aa800" labelFloat="true" layoutX="39.0" layoutY="209.0" prefHeight="35.0" prefWidth="223.0" promptText="Confirm Password" style="-fx-border-color: #e2e2e2; -fx-border-radius: 50px;" unFocusColor="#4d4d4d00">
                <padding>
                   <Insets left="5.0" top="5.0" />
                </padding>
             </JFXPasswordField>
-            <ComboBox layoutX="39.0" layoutY="367.0" prefHeight="27.0" prefWidth="223.0" promptText="Speciality" style="-fx-border-color: #e2e2e2; -fx-background-color: #fff; -fx-border-radius: 50px;" />
             <JFXButton alignment="CENTER" buttonType="RAISED" layoutX="38.0" layoutY="460.0" onAction="#hideSignupPane" prefHeight="42.0" prefWidth="223.0" style="-fx-background-color: #d2d2d2; -fx-background-radius: 50px;" text="Hide" />
+            <JFXTextField fx:id="specTxt" focusColor="#405aa800" labelFloat="true" layoutX="39.0" layoutY="342.0" prefHeight="35.0" prefWidth="223.0" promptText="Speciality" style="-fx-border-color: #e2e2e2; -fx-border-radius: 50px;" unFocusColor="#4d4d4d00">
+               <padding>
+                  <Insets left="5.0" top="5.0" />
+               </padding>
+            </JFXTextField>
          </children>
       </AnchorPane>
   </children>

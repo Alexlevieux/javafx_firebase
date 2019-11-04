@@ -1,13 +1,21 @@
 package sample.controllers;
 
+import com.firebase.client.Firebase;
+import com.jfoenix.controls.JFXPasswordField;
+import com.jfoenix.controls.JFXSnackbar;
+import com.jfoenix.controls.JFXSnackbarLayout;
+import com.jfoenix.controls.JFXTextField;
 import javafx.animation.FadeTransition;
 import javafx.animation.TranslateTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
+import javafx.scene.SnapshotParameters;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Background;
+import javafx.scene.text.Text;
 import javafx.util.Duration;
+import sample.models.TeacherModel;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -23,7 +31,29 @@ public class LoginController implements Initializable {
   private AnchorPane pane3;
 
   @FXML
-  private AnchorPane pane4,signUpPane;
+  private AnchorPane pane4, signUpPane;
+
+  @FXML
+  private JFXTextField phoneNumberTxt;
+
+  @FXML
+  private JFXPasswordField passwordTxt;
+
+  @FXML
+  private JFXTextField nameTxt;
+
+  @FXML
+  private JFXTextField usernameTxt;
+
+  @FXML
+  private JFXTextField addressTxt;
+
+  @FXML
+  private JFXTextField specTxt;
+
+  @FXML
+  private JFXPasswordField confirmPasswordTxt;
+
 
   @Override
   public void initialize(URL location, ResourceBundle resources) {
@@ -77,7 +107,7 @@ public class LoginController implements Initializable {
                 fade6.setToValue(1);
                 fade6.play();
 
-                fade6.setOnFinished(event7->{
+                fade6.setOnFinished(event7 -> {
                   FadeTransition fade7 = new FadeTransition(Duration.seconds(3), pane4);
                   fade7.setFromValue(0);
                   fade7.setToValue(1);
@@ -95,6 +125,35 @@ public class LoginController implements Initializable {
     });
 
 
+  }
+
+  public JFXSnackbar showSnackBar(AnchorPane pane, String message) {
+
+    Text text = new Text();
+    text.setText(message);
+    JFXSnackbar jfxSnackbar = new JFXSnackbar(pane);
+    JFXSnackbar.SnackbarEvent snackbarEvent = new JFXSnackbar.SnackbarEvent(text);
+    jfxSnackbar.enqueue(snackbarEvent);
+    return jfxSnackbar;
+  }
+
+  @FXML
+  void registerAction(ActionEvent event) {
+
+    if (nameTxt.getText().isEmpty() == true) {
+      showSnackBar(signUpPane, "Please Enter your name");
+    }
+    Firebase firebase = new Firebase("https://ourproject-8772d.firebaseio.com/");
+    TeacherModel teacherModel = new TeacherModel();
+    teacherModel.setName(nameTxt.getText());
+    teacherModel.setPassword(passwordTxt.getText());
+    teacherModel.setUserName(usernameTxt.getText());
+    teacherModel.setPhoto("/sample/src/4.jpg");
+    teacherModel.setSummary("Hello , I am using awesome app");
+    teacherModel.setAddress(addressTxt.getText());
+    teacherModel.setSpeciality(specTxt.getText());
+    teacherModel.setPhoneNumber(phoneNumberTxt.getText());
+    firebase.child("teachers").push().setValue(teacherModel);
   }
 
   @FXML
