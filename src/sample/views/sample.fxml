@@ -9,13 +9,13 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="647.0" prefWidth="1188.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controllers.LoginController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="647.0" prefWidth="1188.0" stylesheets="@../stylesheets/styles.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controllers.LoginController">
   <children>
     <AnchorPane fx:id="pane1" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
     <AnchorPane fx:id="pane2" layoutX="10.0" layoutY="10.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
     <AnchorPane fx:id="pane3" layoutX="20.0" layoutY="20.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
     <AnchorPane fx:id="pane4" layoutX="30.0" layoutY="30.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-      <AnchorPane fx:id="signUpPane" layoutX="802.0" layoutY="62.0" prefHeight="524.0" prefWidth="299.0" style="-fx-background-color: #fff; -fx-background-radius: 50px;">
+      <AnchorPane fx:id="signinPane" layoutX="802.0" layoutY="62.0" prefHeight="524.0" prefWidth="299.0" style="-fx-background-color: #fff; -fx-background-radius: 50px;">
          <effect>
             <DropShadow />
          </effect>
@@ -26,17 +26,17 @@
                </font>
             </Label>
             <Label layoutX="68.0" layoutY="128.0" prefHeight="42.0" prefWidth="164.0" text="Hello There!  Login to start your first session" textAlignment="CENTER" wrapText="true" />
-            <JFXTextField alignment="CENTER" focusColor="#405aa800" labelFloat="true" layoutX="38.0" layoutY="200.0" prefHeight="35.0" prefWidth="223.0" promptText="Username" style="-fx-border-color: #e2e2e2; -fx-border-radius: 50px;" unFocusColor="#4d4d4d00">
+            <JFXTextField fx:id="usernameLogin" alignment="CENTER" focusColor="#405aa800" labelFloat="true" layoutX="38.0" layoutY="200.0" prefHeight="35.0" prefWidth="223.0" promptText="Username" style="-fx-border-color: #e2e2e2; -fx-border-radius: 50px;" unFocusColor="#4d4d4d00">
                <padding>
                   <Insets left="5.0" top="5.0" />
                </padding>
             </JFXTextField>
-            <JFXPasswordField alignment="CENTER" focusColor="#405aa800" labelFloat="true" layoutX="38.0" layoutY="254.0" prefHeight="35.0" prefWidth="223.0" promptText="Password" style="-fx-border-color: #e2e2e2; -fx-border-radius: 50px;" unFocusColor="#4d4d4d00">
+            <JFXPasswordField fx:id="passwordLogin" alignment="CENTER" focusColor="#405aa800" labelFloat="true" layoutX="38.0" layoutY="254.0" prefHeight="35.0" prefWidth="223.0" promptText="Password" style="-fx-border-color: #e2e2e2; -fx-border-radius: 50px;" unFocusColor="#4d4d4d00">
                <padding>
                   <Insets left="5.0" top="5.0" />
                </padding>
             </JFXPasswordField>
-            <JFXButton alignment="CENTER" buttonType="RAISED" layoutX="38.0" layoutY="303.0" prefHeight="42.0" prefWidth="223.0" style="-fx-background-color: #00a1ff; -fx-background-radius: 50px;" text="Signin" textFill="#f5f5f5" />
+            <JFXButton alignment="CENTER" buttonType="RAISED" layoutX="38.0" layoutY="303.0" onAction="#signin" prefHeight="42.0" prefWidth="223.0" style="-fx-background-color: #00a1ff; -fx-background-radius: 50px;" text="Signin" textFill="#f5f5f5" />
             <JFXButton alignment="CENTER" buttonType="RAISED" layoutX="38.0" layoutY="357.0" onAction="#showSignupPane" prefHeight="42.0" prefWidth="223.0" style="-fx-background-color: #008a68; -fx-background-radius: 50px;" text="Signup" textFill="#f5f5f5" />
          </children>
       </AnchorPane>
@@ -50,7 +50,7 @@
             <Font name="Arial" size="37.0" />
          </font>
       </Label>
-      <AnchorPane fx:id="signUpPane" layoutX="802.0" layoutY="62.0" prefHeight="524.0" prefWidth="299.0" style="-fx-background-color: #fff; -fx-background-radius: 50px;" stylesheets="@../stylesheets/styles.css">
+      <AnchorPane fx:id="signUpPane" layoutX="802.0" layoutY="62.0" prefHeight="524.0" prefWidth="299.0" style="-fx-background-color: #fff; -fx-background-radius: 50px;" stylesheets="@../stylesheets/styles.css" visible="false">
          <effect>
             <DropShadow />
          </effect>

@@ -1,6 +1,9 @@
 package sample.controllers;
 
+import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
+import com.firebase.client.ValueEventListener;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXSnackbar;
 import com.jfoenix.controls.JFXSnackbarLayout;
@@ -31,7 +34,7 @@ public class LoginController implements Initializable {
   private AnchorPane pane3;
 
   @FXML
-  private AnchorPane pane4, signUpPane;
+  private AnchorPane pane4, signUpPane, signinPane;
 
   @FXML
   private JFXTextField phoneNumberTxt;
@@ -50,10 +53,14 @@ public class LoginController implements Initializable {
 
   @FXML
   private JFXTextField specTxt;
+  @FXML
+  private JFXTextField usernameLogin;
 
   @FXML
-  private JFXPasswordField confirmPasswordTxt;
+  private JFXPasswordField confirmPasswordTxt, passwordLogin;
 
+  Firebase firebase = new Firebase("https://ourproject-8772d.firebaseio.com/");
+  int returnValue;
 
   @Override
   public void initialize(URL location, ResourceBundle resources) {
@@ -142,18 +149,35 @@ public class LoginController implements Initializable {
 
     if (nameTxt.getText().isEmpty() == true) {
       showSnackBar(signUpPane, "Please Enter your name");
+    } else if (usernameTxt.getText().isEmpty() == true) {
+      showSnackBar(signUpPane, "Please Enter your username");
+    } else if (passwordTxt.getText().isEmpty() == true) {
+      showSnackBar(signUpPane, "Please Enter your password");
+    } else if (usernameTxt.getText().isEmpty() == true) {
+      showSnackBar(signUpPane, "Please Enter your username");
+    } else if (passwordTxt.getText().length() <= 7) {
+      showSnackBar(signUpPane, "Password must be greater that 7 characters");
+    } else if (!passwordTxt.getText().equals(confirmPasswordTxt.getText())) {
+      showSnackBar(signUpPane, "Passwords must match");
+    } else if (addressTxt.getText().isEmpty() == true) {
+      showSnackBar(signUpPane, "Please Enter your address");
+    } else if (phoneNumberTxt.getText().isEmpty() == true) {
+      showSnackBar(signUpPane, "Please Enter your phone number");
+    } else if (specTxt.getText().isEmpty() == true) {
+      showSnackBar(signUpPane, "Please Enter your speciality");
+    } else {
+      TeacherModel teacherModel = new TeacherModel();
+      teacherModel.setName(nameTxt.getText());
+      teacherModel.setPassword(passwordTxt.getText());
+      teacherModel.setUserName(usernameTxt.getText());
+      teacherModel.setPhoto("/sample/src/4.jpg");
+      teacherModel.setSummary("Hello , I am using awesome app");
+      teacherModel.setAddress(addressTxt.getText());
+      teacherModel.setSpeciality(specTxt.getText());
+      teacherModel.setPhoneNumber(phoneNumberTxt.getText());
+      firebase.child("teachers").push().setValue(teacherModel);
     }
-    Firebase firebase = new Firebase("https://ourproject-8772d.firebaseio.com/");
-    TeacherModel teacherModel = new TeacherModel();
-    teacherModel.setName(nameTxt.getText());
-    teacherModel.setPassword(passwordTxt.getText());
-    teacherModel.setUserName(usernameTxt.getText());
-    teacherModel.setPhoto("/sample/src/4.jpg");
-    teacherModel.setSummary("Hello , I am using awesome app");
-    teacherModel.setAddress(addressTxt.getText());
-    teacherModel.setSpeciality(specTxt.getText());
-    teacherModel.setPhoneNumber(phoneNumberTxt.getText());
-    firebase.child("teachers").push().setValue(teacherModel);
+
   }
 
   @FXML
@@ -169,5 +193,44 @@ public class LoginController implements Initializable {
     TranslateTransition translateTransition = new TranslateTransition(Duration.seconds(.1), signUpPane);
     translateTransition.setByX(600);
     translateTransition.play();
+  }
+
+  @FXML
+  void signin(ActionEvent event) {
+    if (usernameLogin.getText().isEmpty() == true) {
+      showSnackBar(signinPane, "Please enter username");
+    }
+    if (passwordLogin.getText().isEmpty() == true) {
+      showSnackBar(signinPane, "Please password");
+    }
+    if (usernameLogin.getText().isEmpty() == true && passwordLogin.getText().isEmpty() == true) {
+      showSnackBar(signinPane, "Please enter username and username");
+    } else {
+      firebase.child("teachers").addListenerForSingleValueEvent(new ValueEventListener() {
+        @Override
+        public void onDataChange(DataSnapshot dataSnapshot) {
+          for (DataSnapshot data : dataSnapshot.getChildren()) {
+            TeacherModel teacherModel = data.getValue(TeacherModel.class);
+            if (usernameLogin.getText().equals(teacherModel.getUserName())
+              && passwordLogin.getText().equals(teacherModel.getPassword())) {
+              returnValue = 1;
+              if (returnValue == 1) {
+                System.out.println("found");
+              } else {
+                System.out.println("Not found");
+
+              }
+            }
+          }
+        }
+
+        @Override
+        public void onCancelled(FirebaseError firebaseError) {
+
+        }
+      });
+
+      System.out.println(returnValue);
+    }
   }
 }

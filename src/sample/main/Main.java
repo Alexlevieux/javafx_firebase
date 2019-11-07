@@ -24,7 +24,7 @@ public class Main extends Application {
       FXMLLoader loader = new FXMLLoader(getClass().getResource("/sample/views/sample.fxml"));
       AnchorPane pane = loader.load();
       Scene scene = new Scene(pane);
-      scene.getStylesheets().addAll(this.getClass().getResource("/sample/stylesheets/styles.css").toExternalForm());
+      scene.getStylesheets().add(this.getClass().getResource("/sample/stylesheets/styles.css").toExternalForm());
       loginStage.setScene(scene);
       loginStage.show();
 
