@@ -6,21 +6,21 @@ import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXSnackbar;
-import com.jfoenix.controls.JFXSnackbarLayout;
 import com.jfoenix.controls.JFXTextField;
 import javafx.animation.FadeTransition;
 import javafx.animation.TranslateTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.SnapshotParameters;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Background;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
+import sample.main.Main;
 import sample.models.TeacherModel;
 
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class LoginController implements Initializable {
@@ -59,11 +59,16 @@ public class LoginController implements Initializable {
   @FXML
   private JFXPasswordField confirmPasswordTxt, passwordLogin;
 
+
+  List<TeacherModel> teacherList;
+  public static TeacherModel teacherModel;
   Firebase firebase = new Firebase("https://ourproject-8772d.firebaseio.com/");
   int returnValue;
 
   @Override
   public void initialize(URL location, ResourceBundle resources) {
+    teacherList = new ArrayList<>();
+    login();
     pane1.setStyle("-fx-background-image: url(/sample/src/1.jpg);");
     pane2.setStyle("-fx-background-image: url(/sample/src/2.jpg);");
     pane3.setStyle("-fx-background-image: url(/sample/src/3.jpg);");
@@ -195,42 +200,46 @@ public class LoginController implements Initializable {
     translateTransition.play();
   }
 
+  public void login() {
+    firebase.child("teachers").addListenerForSingleValueEvent(new ValueEventListener() {
+      @Override
+      public void onDataChange(DataSnapshot dataSnapshot) {
+        for (DataSnapshot data : dataSnapshot.getChildren()) {
+         teacherModel = data.getValue(TeacherModel.class);
+          teacherList.add(teacherModel);
+        }
+      }
+
+      @Override
+      public void onCancelled(FirebaseError firebaseError) {
+
+      }
+    });
+  }
+
   @FXML
   void signin(ActionEvent event) {
     if (usernameLogin.getText().isEmpty() == true) {
       showSnackBar(signinPane, "Please enter username");
-    }
-    if (passwordLogin.getText().isEmpty() == true) {
+    } else if (passwordLogin.getText().isEmpty() == true) {
       showSnackBar(signinPane, "Please password");
-    }
-    if (usernameLogin.getText().isEmpty() == true && passwordLogin.getText().isEmpty() == true) {
+    } else if (usernameLogin.getText().isEmpty() == true && passwordLogin.getText().isEmpty() == true) {
       showSnackBar(signinPane, "Please enter username and username");
     } else {
-      firebase.child("teachers").addListenerForSingleValueEvent(new ValueEventListener() {
-        @Override
-        public void onDataChange(DataSnapshot dataSnapshot) {
-          for (DataSnapshot data : dataSnapshot.getChildren()) {
-            TeacherModel teacherModel = data.getValue(TeacherModel.class);
-            if (usernameLogin.getText().equals(teacherModel.getUserName())
-              && passwordLogin.getText().equals(teacherModel.getPassword())) {
-              returnValue = 1;
-              if (returnValue == 1) {
-                System.out.println("found");
-              } else {
-                System.out.println("Not found");
-
-              }
-            }
-          }
+      for (int i = 0; i < teacherList.size(); i++) {
+        TeacherModel teacherModel = teacherList.get(i);
+        if (usernameLogin.getText().equals(teacherModel.getUserName()) &&
+          passwordLogin.getText().equals(teacherModel.getPassword())) {
+          returnValue = 1;
         }
-
-        @Override
-        public void onCancelled(FirebaseError firebaseError) {
-
-        }
-      });
-
-      System.out.println(returnValue);
+      }
+      if (returnValue == 1) {
+        new Main().openMainWindow();
+        Main.loginStage.close();
+        showSnackBar(signinPane,usernameLogin.getText() + " Found");
+      } else if (returnValue == 0) {
+        showSnackBar(signinPane,usernameLogin.getText() + "Not  Found");
+      }
     }
   }
 }
